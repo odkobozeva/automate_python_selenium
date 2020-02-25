@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time
+from herokuapp.BaseApp import BasePage
 
 
 def test_name(browser):
@@ -17,23 +18,6 @@ class SearchLocators:
     LOCATOR_FIGURE = (By.XPATH, '//*[@class="figure"]')
     LOCATOR_VIEW_PROFILE = ".//*[contains(text(), 'View profile')]"
     LOCATOR_TEXT_PROFILE = (By.TAG_NAME, "h1")
-
-
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
-
-    def find_elements(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
 
 
 class SearchHelper(BasePage):

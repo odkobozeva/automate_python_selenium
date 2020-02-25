@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+from herokuapp.BaseApp import BasePage
 
 
 def test_checkbox(browser):
@@ -18,19 +19,6 @@ def test_checkbox(browser):
 
 class SearchLocators:
     LOCATOR_CHECKBOX = (By.XPATH, "//input[@type='checkbox']")
-
-
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_elements(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
 
 
 class SearchHelper(BasePage):

@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
+from herokuapp.BaseApp import BasePage
 
 
 def test_name(browser):
@@ -20,19 +21,6 @@ class SearchLocators:
     LOCATOR_SELECT = (By.ID, 'dropdown')
     LOCATOR_DEFAULT_SELECT = (By.XPATH, '//*[@id="dropdown"]/option[1]')
     LOCATOR_SELECT_STATUS = (By.XPATH, '//select/option[@selected]')
-
-
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
 
 
 class SearchHelper(BasePage):

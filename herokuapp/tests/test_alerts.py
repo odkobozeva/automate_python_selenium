@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+from herokuapp.BaseApp import BasePage
 
 
 def test_name(browser):
@@ -22,28 +23,11 @@ class SearchLocators:
     LOCATOR_RESULT = (By.ID, "result")
 
 
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
-
-    def switch_to_alert(self):
-        return self.driver.switch_to.alert
-
+class SearchHelper(BasePage):
     def check_result(self, text_result):
         result = self.find_element(SearchLocators.LOCATOR_RESULT).text
         assert result == text_result
         print(result)
-
-
-class SearchHelper(BasePage):
 
     def click_for_alert(self):
         button = self.find_element(SearchLocators.LOCATOR_ALERT)

@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+from herokuapp.BaseApp import BasePage
 
 
 def test_new_window(browser):
@@ -16,23 +17,6 @@ def test_new_window(browser):
 class SearchLocators:
     LOCATOR_LINK = (By.XPATH, "//*[@href='/windows/new']")
     LOCATOR_TEXT = (By.TAG_NAME, "h3")
-
-
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
-
-    def change_tab(self, tab_number):
-        new_window = self.driver.window_handles[tab_number]
-        return self.driver.switch_to.window(new_window)
 
 
 class SearchHelper(BasePage):

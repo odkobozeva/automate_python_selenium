@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+from herokuapp.BaseApp import BasePage
 
 
 def test_login_pos(browser):
@@ -43,23 +44,6 @@ class SearchLocators:
     LOCATOR_LOGIN_PAGE = (By.TAG_NAME, "h2")
 
 
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
-
-    def find_element_wait(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
-
-
 class SearchHelper(BasePage):
 
     def enter_data(self, username, password):
@@ -71,11 +55,11 @@ class SearchHelper(BasePage):
         submit_button.click()
 
     def check_subheader(self, text_subheader):
-        subheader = self.find_element_wait(SearchLocators.LOCATOR_SUBHEADER).text
+        subheader = self.find_element(SearchLocators.LOCATOR_SUBHEADER).text
         assert subheader == text_subheader
 
     def check_alert(self, text_alert):
-        alert = self.find_element_wait(SearchLocators.LOCATOR_ALERT).text
+        alert = self.find_element(SearchLocators.LOCATOR_ALERT).text
         assert text_alert in alert
 
     def logout(self):
@@ -83,9 +67,9 @@ class SearchHelper(BasePage):
         logout_button.click()
 
     def check_logout_alert(self, text_logout_alert):
-        logout_alert = self.find_element_wait(SearchLocators.LOCATOR_ALERT).text
+        logout_alert = self.find_element(SearchLocators.LOCATOR_ALERT).text
         assert text_logout_alert in logout_alert
 
     def check_h2(self, text_h2):
-        h2 = self.find_element_wait(SearchLocators.LOCATOR_LOGIN_PAGE).text
+        h2 = self.find_element(SearchLocators.LOCATOR_LOGIN_PAGE).text
         assert h2 == text_h2

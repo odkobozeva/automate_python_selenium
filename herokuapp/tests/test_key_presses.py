@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+from herokuapp.BaseApp import BasePage
 
 
 @pytest.mark.parametrize('keys', [
@@ -25,19 +26,6 @@ class SearchLocators:
     LOCATOR_RESULT = (By.ID, "result")
 
 
-class BasePage:
-
-    def __init__(self, browser):
-        self.driver = browser
-
-    def go_to_site(self, base_url):
-        return self.driver.get(base_url)
-
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
-
-
 class SearchHelper(BasePage):
 
     def enter_key(self, keys):
@@ -45,5 +33,3 @@ class SearchHelper(BasePage):
         result = self.find_element(SearchLocators.LOCATOR_RESULT)
         input.send_keys(keys[0])
         assert result.text == f'You entered: {keys[1]}'
-        # input.send_keys(keys[0])
-        # assert result == keys[0]
